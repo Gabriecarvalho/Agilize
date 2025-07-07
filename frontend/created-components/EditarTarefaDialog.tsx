@@ -4,6 +4,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import GradientText from "./GradientText";
 import toast from "react-hot-toast";
 
@@ -15,7 +16,12 @@ interface EditarTarefaDialogProps {
   };
   isOpen: boolean;
   onClose: () => void;
-  onUpdated: (updatedTarefa: { id: number; titulo: string; descricao?: string; status?: string }) => void;
+  onUpdated: (updatedTarefa: {
+    id: number;
+    titulo: string;
+    descricao?: string;
+    status?: string;
+  }) => void;
 }
 
 export default function EditarTarefaDialog({
@@ -24,15 +30,15 @@ export default function EditarTarefaDialog({
   onClose,
   onUpdated,
 }: EditarTarefaDialogProps) {
-  const [formData, setFormData] = useState({ titulo: "", descricao: ""});
+  const [formData, setFormData] = useState({ titulo: "", descricao: "" });
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (isOpen) {
       setFormData({
         titulo: tarefa.titulo || "",
-        descricao: tarefa.descricao || "",      
-      });   
+        descricao: tarefa.descricao || "",
+      });
     }
   }, [isOpen, tarefa]);
 
@@ -51,7 +57,9 @@ export default function EditarTarefaDialog({
 
     setLoading(true);
     try {
-      const res = await axios.put(`/api/tarefas/${tarefa.id}`, formData, { withCredentials: true });
+      const res = await axios.put(`/api/tarefas/${tarefa.id}`, formData, {
+        withCredentials: true,
+      });
       onUpdated(res.data);
       toast.success("Tarefa atualizada!");
       onClose();
@@ -63,15 +71,14 @@ export default function EditarTarefaDialog({
     }
   };
 
-  if (!isOpen) return null;
-
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
-      <div className="w-full max-w-md rounded-2xl bg-[#121212] p-8 border border-gray-800 shadow-xl text-white">
-        <h1 className="text-3xl font-bold text-center mb-4">
+    <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
+      <DialogContent className="max-w-lg bg-[#121212] text-white border border-gray-800 shadow-xl rounded-2xl">
+        <DialogTitle className="text-3xl font-bold text-center">
           <GradientText>Editar Tarefa</GradientText>
-        </h1>
-        <form onSubmit={handleSubmit} className="space-y-6">
+        </DialogTitle>
+
+        <form onSubmit={handleSubmit} className="space-y-6 mt-4">
           <div>
             <Label htmlFor="titulo">Título</Label>
             <input
@@ -94,6 +101,7 @@ export default function EditarTarefaDialog({
               className="mt-1 w-full bg-[#1e1e1e] border border-gray-700 rounded-md p-3 text-white focus:ring-2 focus:ring-green-600 resize-none"
             />
           </div>
+
           <Button
             type="submit"
             disabled={loading}
@@ -101,6 +109,7 @@ export default function EditarTarefaDialog({
           >
             {loading ? "Atualizando..." : "Atualizar Tarefa"}
           </Button>
+
           <button
             type="button"
             onClick={onClose}
@@ -109,7 +118,7 @@ export default function EditarTarefaDialog({
             Cancelar
           </button>
         </form>
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   );
 }

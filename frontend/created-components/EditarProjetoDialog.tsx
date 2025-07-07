@@ -4,6 +4,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import GradientText from "./GradientText";
 import toast from "react-hot-toast";
 
@@ -52,7 +53,7 @@ export default function EditarProjetoDialog({
     setLoading(true);
     try {
       const res = await axios.put(`/api/projetos/${projeto.id}`, formData, { withCredentials: true });
-      onUpdated(res.data); // atualiza a lista no pai
+      onUpdated(res.data);
       toast.success("Projeto atualizado!");
       onClose();
     } catch (err) {
@@ -63,15 +64,14 @@ export default function EditarProjetoDialog({
     }
   };
 
-  if (!isOpen) return null;
-
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
-      <div className="w-full max-w-md rounded-2xl bg-[#121212] p-8 border border-gray-800 shadow-xl text-white">
-        <h1 className="text-3xl font-bold text-center mb-4">
+    <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
+      <DialogContent className="max-w-lg bg-[#121212] text-white border border-gray-800 shadow-xl rounded-2xl">
+        <DialogTitle className="text-3xl font-bold text-center">
           <GradientText>Editar Projeto</GradientText>
-        </h1>
-        <form onSubmit={handleSubmit} className="space-y-6">
+        </DialogTitle>
+
+        <form onSubmit={handleSubmit} className="space-y-6 mt-4">
           <div>
             <Label htmlFor="nome">Nome do Projeto</Label>
             <input
@@ -83,6 +83,7 @@ export default function EditarProjetoDialog({
               className="mt-1 w-full bg-[#1e1e1e] border border-gray-700 rounded-md p-3 text-white focus:ring-2 focus:ring-green-600"
             />
           </div>
+
           <div>
             <Label htmlFor="objetivo">Objetivo</Label>
             <textarea
@@ -94,6 +95,7 @@ export default function EditarProjetoDialog({
               className="mt-1 w-full bg-[#1e1e1e] border border-gray-700 rounded-md p-3 text-white focus:ring-2 focus:ring-green-600 resize-none"
             />
           </div>
+
           <Button
             type="submit"
             disabled={loading}
@@ -101,6 +103,7 @@ export default function EditarProjetoDialog({
           >
             {loading ? "Atualizando..." : "Atualizar Projeto"}
           </Button>
+
           <button
             type="button"
             onClick={onClose}
@@ -109,7 +112,7 @@ export default function EditarProjetoDialog({
             Cancelar
           </button>
         </form>
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   );
 }
