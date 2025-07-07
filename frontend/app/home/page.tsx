@@ -8,10 +8,12 @@ import RegisterUsuario from "@/components/registerUsuario";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import AlterarSenhaForm from "@/components/alterarSenhaForm";
+import AlterarUsuario from "@/components/alterarUsuario";
 
 export default function ProjetosPage() {
   const router = useRouter();
   const [isAdmin, setIsAdmin] = useState(false);
+  const [name, setName] = useState("");
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -19,6 +21,7 @@ export default function ProjetosPage() {
         const response = await axios.get("/api/me", { withCredentials: true });
         const user = response.data;
         setIsAdmin(user.tipo === 0); // tipo 0 = admin
+        setName(user.nome || "Usuário");
       } catch (error) {
         console.error("Erro ao buscar dados do usuário:", error);
       }
@@ -31,7 +34,7 @@ export default function ProjetosPage() {
     <div className="min-h-screen bg-gradient-to-b from-[#121212] to-[#1f1f1f] text-white px-6 py-12">
       <div className="max-w-5xl mx-auto">
         <h1 className="text-4xl font-extrabold mb-2">
-          Bem-vindo ao <span className="text-green-500">Agilize</span>!
+          Bem-vindo ao <span className="text-green-500">Agilize</span> <span className="text-purple-500">{name}</span>!
         </h1>
         <p className="text-gray-300 text-lg mb-10">
           Aqui você gerencia seus projetos e tarefas de forma rápida e eficiente.
@@ -64,6 +67,8 @@ export default function ProjetosPage() {
           <RegisterProjeto />
           <RegisterTarefa />
           <AlterarSenhaForm />
+          <AlterarUsuario />
+
 
           {isAdmin && <RegisterUsuario />}
         </div>
