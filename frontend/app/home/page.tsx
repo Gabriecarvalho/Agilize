@@ -7,6 +7,7 @@ import RegisterTarefa from "@/components/registerTarefa";
 import RegisterUsuario from "@/components/registerUsuario";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import AlterarSenhaForm from "@/components/alterarSenhaForm";
 
 export default function ProjetosPage() {
   const router = useRouter();
@@ -62,6 +63,7 @@ export default function ProjetosPage() {
 
           <RegisterProjeto />
           <RegisterTarefa />
+          <AlterarSenhaForm />
 
           {isAdmin && <RegisterUsuario />}
         </div>

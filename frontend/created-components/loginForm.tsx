@@ -15,7 +15,7 @@ const LoginForm: React.FC = () => {
   const router = useRouter();
   const [formData, setFormData] = useState<User>({
     id: 0,
-    name: "",
+    nome: "",
     email: "",
     password: "",
   });
