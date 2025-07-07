@@ -74,7 +74,7 @@ Crie um arquivo `.env` na raiz do projeto com o seguinte conteúdo:
 ```env
 # Exemplo com PostgreSQL
 DATABASE_URL="postgresql://postgres:senha@localhost:5432/agilize_db"
-JWT_SECRET="minhaChaveSuperSecreta123"
+SECRET_KEY="minhaChaveSuperSecreta123"
 ```
 
 ---
@@ -108,6 +108,14 @@ A aplicação estará disponível em: [http://localhost:3000](http://localhost:3
 cd backend
 npm install
 npm run dev
+```
+
+### 6. Insira uma base de dados testes no banco
+
+```bash
+
+cd backend
+npx prisma db seed
 ```
 
 ---
