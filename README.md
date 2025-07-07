@@ -1,6 +1,6 @@
 # 🚀 Agilize 
 
-**Agilize** é uma aplicação web de gerenciamento de projetos e tarefas, com recursos de cadastro de usuários, organização de equipes e diferenciação de permissões por tipo de usuário. Projetado com foco em produtividade e usabilidade, é ideal para pequenos times, freelancers ou ambientes educacionais.
+**Agilize** é uma aplicação web de gerenciamento de projetos e tarefas, com recursos de cadastro de usuários, organização de equipes e diferenciação de permissões por tipo de usuário. Projetado para treinar typescript,nodejs e postgresql
 
 ---
 
