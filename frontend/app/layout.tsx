@@ -21,7 +21,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="/favico.png" type="image/png" />
+        <link rel="icon" href="/wallet.png" type="image/png" />
       </head>
       <body className={poppins.className}>
         {showNavbar && <Navbar />} {/* Navbar visível só fora da landing */}
